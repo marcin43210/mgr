@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projectmsr;
+package App;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import view.MainWindow;
 
 /**
  *
@@ -14,10 +18,19 @@ public class ProjectMsr {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         // TODO code application logic here
         MainWindow mainWindow = new MainWindow();
         mainWindow.setVisible(true);
+        MainDb db = new MainDb();
+        
+        ResultSet x = db.query("SELECT title::text FROM test");
+        x.next();
+        String y = x.getString("title");
+        System.out.println(y);
+        
+        
+       
     }
     
 }
