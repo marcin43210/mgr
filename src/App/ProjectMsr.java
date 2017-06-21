@@ -22,13 +22,9 @@ public class ProjectMsr {
         // TODO code application logic here
         MainWindow mainWindow = new MainWindow();
         mainWindow.setVisible(true);
-        MainDb db = new MainDb();
+        //MainDb db = new MainDb();
         
-        ResultSet x = db.query("SELECT title::text FROM test");
-        x.next();
-        String y = x.getString("title");
-        System.out.println(y);
-        
+     
         
        
     }

@@ -46,7 +46,7 @@ public class MainDb {
         
      }
      
-     public Object query(String query)
+     public ResultSet query(String query)
      {
          ResultSet result = null;
          try{        
