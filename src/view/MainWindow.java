@@ -113,6 +113,8 @@ public class MainWindow extends javax.swing.JFrame {
             .addGap(0, 493, Short.MAX_VALUE)
         );
 
+        GenerujTest test = new GenerujTest();
+
         jTabbedPane1.addTab("Generuj test", jPanel1);
 
         javax.swing.GroupLayout sprawdzanieLayout = new javax.swing.GroupLayout(sprawdzanie);
