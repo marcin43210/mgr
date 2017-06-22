@@ -50,6 +50,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         setKategorieList();
         setKategorieModel(kategorieMap);
+        
         /*try{
         setKategorieModel(db.query("SELECT name FROM category;"));
         }catch(SQLException e)
@@ -77,7 +78,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        test = new javax.swing.JPanel();
         sprawdzanie = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         kategorieLabel = new javax.swing.JLabel();
@@ -102,20 +103,20 @@ public class MainWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout testLayout = new javax.swing.GroupLayout(test);
+        test.setLayout(testLayout);
+        testLayout.setHorizontalGroup(
+            testLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 784, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        testLayout.setVerticalGroup(
+            testLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 493, Short.MAX_VALUE)
         );
 
         GenerujTest test = new GenerujTest();
 
-        jTabbedPane1.addTab("Generuj test", jPanel1);
+        jTabbedPane1.addTab("Generuj test", test);
 
         javax.swing.GroupLayout sprawdzanieLayout = new javax.swing.GroupLayout(sprawdzanie);
         sprawdzanie.setLayout(sprawdzanieLayout);
@@ -354,7 +355,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -371,6 +371,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton saveKategoria;
     private javax.swing.JButton saveQuestion;
     private javax.swing.JPanel sprawdzanie;
+    private javax.swing.JPanel test;
     private javax.swing.JTextField trescTf;
     // End of variables declaration//GEN-END:variables
 }

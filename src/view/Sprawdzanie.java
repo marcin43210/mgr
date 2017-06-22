@@ -93,11 +93,7 @@ public class Sprawdzanie extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
-        JFileChooser fc = new JFileChooser();
-        if(fc.showOpenDialog(null)==JFileChooser.APPROVE_OPTION)
-                {
-                    File plik = fc.getSelectedFile();
-                }
+        
     }//GEN-LAST:event_fileChooserActionPerformed
 
 
