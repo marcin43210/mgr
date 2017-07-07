@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.swing.ComboBoxModel;
 import javax.swing.ListModel;
 import model.CategoryModel;
+import model.CategoryTableModel;
 import presenter.Presenter;
 
 
@@ -49,7 +50,11 @@ public class MainWindow extends javax.swing.JFrame {
         
         initComponents();
         setKategorieList();
-        setKategorieModel(kategorieMap);
+        CategoryTableModel model = new CategoryTableModel();
+        model.setModelData(kategorieMap);
+        
+        categoryTable.setModel(model);
+        //setKategorieModel(kategorieMap);
         
         /*try{
         setKategorieModel(db.query("SELECT name FROM category;"));
@@ -68,7 +73,7 @@ public class MainWindow extends javax.swing.JFrame {
             System.out.println(x.getName());
             }
         
-       // kategoriaCB.setModel((ComboBoxModel<java.lang.String>) kategorie);
+        //kategoriaCB.setModel((ComboBoxModel<java.lang.String>) kategorie);
        
     }
 
@@ -94,12 +99,12 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         odpowiedz4Tf = new javax.swing.JTextField();
         kategoriaCB = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        categoryList = new javax.swing.JList<>();
         saveKategoria = new javax.swing.JButton();
         editKategoriaTf = new javax.swing.JTextField();
         deleteKategoria = new javax.swing.JButton();
         saveQuestion = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        categoryTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,14 +164,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        categoryList.setModel(kategoriaCB.getModel());
-        categoryList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                categoryListMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(categoryList);
-
         saveKategoria.setText("Zapisz kategorie");
 
         editKategoriaTf.addActionListener(new java.awt.event.ActionListener() {
@@ -179,6 +176,8 @@ public class MainWindow extends javax.swing.JFrame {
 
         saveQuestion.setText("Zapisz pytanie");
 
+        jScrollPane2.setViewportView(categoryTable);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -186,36 +185,42 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(134, 134, 134)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 434, Short.MAX_VALUE)
-                .addComponent(kategorieLabel)
-                .addGap(134, 134, 134))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(odpowiedz3Label)
-                        .addComponent(odpowiedz2Label)
-                        .addComponent(odpowiedz1Label)
-                        .addComponent(trescTf, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addComponent(odpowiedz1Tf)
-                        .addComponent(odpowiedz2Tf)
-                        .addComponent(odpowiedz3Tf)
-                        .addComponent(odpowiedz4Tf))
-                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                    .addComponent(editKategoriaTf)
-                    .addComponent(deleteKategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(saveKategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(74, 74, 74))
+                .addComponent(kategorieLabel)
+                .addGap(161, 161, 161))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(kategoriaCB, 0, 114, Short.MAX_VALUE)
-                    .addComponent(saveQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(odpowiedz3Label)
+                                .addComponent(odpowiedz2Label)
+                                .addComponent(odpowiedz1Label)
+                                .addComponent(trescTf, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addComponent(odpowiedz1Tf)
+                                .addComponent(odpowiedz2Tf)
+                                .addComponent(odpowiedz3Tf)
+                                .addComponent(odpowiedz4Tf))
+                            .addComponent(jLabel3)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(saveQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(kategoriaCB, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(editKategoriaTf)
+                            .addComponent(deleteKategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(saveKategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(74, 74, 74))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(102, 102, 102))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,7 +230,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(kategorieLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -238,7 +243,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(odpowiedz2Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(odpowiedz2Tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -248,20 +253,20 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(editKategoriaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(odpowiedz4Tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(deleteKategoria)
                         .addGap(18, 18, 18)
-                        .addComponent(saveKategoria)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(kategoriaCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(saveKategoria))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(odpowiedz4Tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(kategoriaCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(saveQuestion)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Pytania i kategorie", jPanel4);
@@ -309,10 +314,6 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_editKategoriaTfActionPerformed
 
-    private void categoryListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryListMouseClicked
-        editKategoriaTf.setText(categoryList.getSelectedValue());
-    }//GEN-LAST:event_categoryListMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -349,7 +350,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> categoryList;
+    private javax.swing.JTable categoryTable;
     private javax.swing.JButton deleteKategoria;
     private javax.swing.JTextField editKategoriaTf;
     private javax.swing.JLabel jLabel1;
@@ -357,7 +358,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox<String> kategoriaCB;
     private javax.swing.JLabel kategorieLabel;
