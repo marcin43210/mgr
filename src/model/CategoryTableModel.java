@@ -53,6 +53,8 @@ public class CategoryTableModel extends AbstractTableModel{
         return kategorie.get(rowIndex);
         
     }
+ 
+    
     public void setModelData(List<CategoryModel> cat)
     {
         this.kategorie = cat;

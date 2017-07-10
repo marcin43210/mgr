@@ -59,6 +59,20 @@ public class MainDb {
          return result;
      }
      
+     
+      public void updateQuery(String query)
+     {
+        
+         try{        
+             stat.executeQuery(query);
+         }catch(SQLException e)
+         {
+             System.err.println("Błąd przy wykonywaniu zapytania");
+             e.printStackTrace();
+         }
+        
+     }
+     
    
      
 }
