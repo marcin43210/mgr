@@ -18,7 +18,6 @@ import javax.swing.ListModel;
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import model.CategoryListModel;
 import model.CategoryModel;
-import model.CategoryTableModel;
 import presenter.Presenter;
 
 
@@ -53,7 +52,8 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         setKategorieList();       
         model.setModelData(kategorieMap);
-        kategorieList.setModel(model);    
+        kategorieList.setModel(model);
+        
 
     }
     
@@ -80,7 +80,6 @@ public class MainWindow extends javax.swing.JFrame {
         odpowiedz3Tf = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         odpowiedz4Tf = new javax.swing.JTextField();
-        kategoriaCB = new javax.swing.JComboBox<>();
         saveKategoria = new javax.swing.JButton();
         editKategoriaTf = new javax.swing.JTextField();
         deleteKategoria = new javax.swing.JButton();
@@ -128,23 +127,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         odpowiedz1Label.setText("Odpowiedź 1 (poprawna)");
 
-        odpowiedz1Tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                odpowiedz1TfActionPerformed(evt);
-            }
-        });
-
         odpowiedz2Label.setText("Odpowiedź 2");
 
         odpowiedz3Label.setText("Odpowiedź 3");
 
         jLabel3.setText("Odpowiedź 4");
-
-        odpowiedz4Tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                odpowiedz4TfActionPerformed(evt);
-            }
-        });
 
         saveKategoria.setText("Zapisz kategorie");
         saveKategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -167,6 +154,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         saveQuestion.setText("Zapisz pytanie");
+        saveQuestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveQuestionActionPerformed(evt);
+            }
+        });
 
         kategorieList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -186,26 +178,19 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(kategorieLabel)
                 .addGap(161, 161, 161))
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(odpowiedz3Label)
-                                .addComponent(odpowiedz2Label)
-                                .addComponent(odpowiedz1Label)
-                                .addComponent(trescTf, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addComponent(odpowiedz1Tf)
-                                .addComponent(odpowiedz2Tf)
-                                .addComponent(odpowiedz3Tf)
-                                .addComponent(odpowiedz4Tf))
-                            .addComponent(jLabel3)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(saveQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(kategoriaCB, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(odpowiedz3Label)
+                        .addComponent(odpowiedz2Label)
+                        .addComponent(odpowiedz1Label)
+                        .addComponent(trescTf, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addComponent(odpowiedz1Tf)
+                        .addComponent(odpowiedz2Tf)
+                        .addComponent(odpowiedz3Tf)
+                        .addComponent(odpowiedz4Tf))
+                    .addComponent(jLabel3))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
@@ -218,6 +203,10 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(123, 123, 123))))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addComponent(saveQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,12 +247,10 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(odpowiedz4Tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(kategoriaCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(odpowiedz4Tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
                 .addComponent(saveQuestion)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Pytania i kategorie", jPanel4);
@@ -299,50 +286,46 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void odpowiedz1TfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odpowiedz1TfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_odpowiedz1TfActionPerformed
-
-    private void odpowiedz4TfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odpowiedz4TfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_odpowiedz4TfActionPerformed
-
-    private void editKategoriaTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editKategoriaTfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editKategoriaTfActionPerformed
-
     private void kategorieListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kategorieListMouseClicked
         // TODO add your handling code here:
         if(isLeftMouseButton(evt))
         editKategoriaTf.setText(kategorieMap.get(kategorieList.getSelectedIndex()).getName());
         else
-            kategorieList.clearSelection();
-        
+        kategorieList.clearSelection();
+
     }//GEN-LAST:event_kategorieListMouseClicked
+
+    private void deleteKategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteKategoriaActionPerformed
+        // TODO add your handling code here:
+
+        long catId = kategorieMap.get(kategorieList.getSelectedIndex()).getId();
+        db.updateQuery("DELETE FROM category WHERE id = " + catId +";");
+        refreshCategoryList();
+    }//GEN-LAST:event_deleteKategoriaActionPerformed
+
+    private void editKategoriaTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editKategoriaTfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editKategoriaTfActionPerformed
 
     private void saveKategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveKategoriaActionPerformed
         // TODO add your handling code here:
-        
-        String newName = editKategoriaTf.getText();     
+
+        String newName = editKategoriaTf.getText();
         if(kategorieList.getSelectedIndex() != -1)
         {
             long catId = kategorieMap.get(kategorieList.getSelectedIndex()).getId();
             db.updateQuery("UPDATE category SET name = '" + newName + "'WHERE id = " + catId +";");
         }else
-            db.updateQuery("INSERT INTO category(id, name) VALUES (default, '" + newName + "');");
-        
+        db.updateQuery("INSERT INTO category(id, name) VALUES (default, '" + newName + "');");
+
         refreshCategoryList();
-        
-  
+
     }//GEN-LAST:event_saveKategoriaActionPerformed
 
-    private void deleteKategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteKategoriaActionPerformed
+    private void saveQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionActionPerformed
         // TODO add your handling code here:
         
-        long catId = kategorieMap.get(kategorieList.getSelectedIndex()).getId();
-        db.updateQuery("DELETE FROM category WHERE id = " + catId +";");
-        refreshCategoryList();         
-    }//GEN-LAST:event_deleteKategoriaActionPerformed
+    }//GEN-LAST:event_saveQuestionActionPerformed
 
     private void refreshCategoryList()
     {
@@ -400,7 +383,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JComboBox<String> kategoriaCB;
     private javax.swing.JLabel kategorieLabel;
     private javax.swing.JList<String> kategorieList;
     private javax.swing.JLabel odpowiedz1Label;

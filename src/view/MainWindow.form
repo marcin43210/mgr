@@ -133,31 +133,20 @@
                           <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="odpowiedz3Label" min="-2" max="-2" attributes="0"/>
-                                          <Component id="odpowiedz2Label" min="-2" max="-2" attributes="0"/>
-                                          <Component id="odpowiedz1Label" min="-2" max="-2" attributes="0"/>
-                                          <Component id="trescTf" pref="324" max="32767" attributes="0"/>
-                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="odpowiedz1Tf" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="odpowiedz2Tf" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="odpowiedz3Tf" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="odpowiedz4Tf" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="odpowiedz3Label" min="-2" max="-2" attributes="0"/>
+                                  <Component id="odpowiedz2Label" min="-2" max="-2" attributes="0"/>
+                                  <Component id="odpowiedz1Label" min="-2" max="-2" attributes="0"/>
+                                  <Component id="trescTf" pref="324" max="32767" attributes="0"/>
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="odpowiedz1Tf" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="odpowiedz2Tf" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="odpowiedz3Tf" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="odpowiedz4Tf" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="saveQuestion" min="-2" pref="114" max="-2" attributes="0"/>
-                                      <Component id="kategoriaCB" min="-2" pref="114" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
@@ -175,6 +164,11 @@
                                   <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                          <Component id="saveQuestion" min="-2" pref="114" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -224,13 +218,11 @@
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="odpowiedz4Tf" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="kategoriaCB" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="saveQuestion" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="22" max="32767" attributes="0"/>
+                          <EmptySpace pref="44" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -259,9 +251,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="odpowiedz1Tf">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="odpowiedz1TfActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="odpowiedz2Label">
                   <Properties>
@@ -283,19 +272,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="odpowiedz4Tf">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="odpowiedz4TfActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JComboBox" name="kategoriaCB">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="0"/>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="saveKategoria">
                   <Properties>
@@ -322,6 +298,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Zapisz pytanie"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveQuestionActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane1">
                   <AuxValues>
