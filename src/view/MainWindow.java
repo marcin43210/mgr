@@ -324,7 +324,9 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void saveQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionActionPerformed
         // TODO add your handling code here:
-        
+        Long idCat = kategorieMap.get(kategorieList.getSelectedIndex()).getId();
+        String params = "'" + trescTf.getText() + "','" + odpowiedz1Tf.getText() + "','" + odpowiedz2Tf.getText() + "','" + odpowiedz3Tf.getText() + "','" + odpowiedz4Tf.getText() +"'," + idCat.toString() ;
+        db.updateQuery("SELECT add_pytanie("+ params +");");
     }//GEN-LAST:event_saveQuestionActionPerformed
 
     private void refreshCategoryList()
