@@ -18,6 +18,9 @@ import javax.swing.ListModel;
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import model.CategoryListModel;
 import model.CategoryModel;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 import presenter.Presenter;
 
 
@@ -48,7 +51,9 @@ public class MainWindow extends javax.swing.JFrame {
      }
     
     public MainWindow() {
-        
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+                Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+                System.out.println("mat = " + mat.dump());
         initComponents();
         setKategorieList();       
         model.setModelData(kategorieMap);
@@ -372,6 +377,8 @@ public class MainWindow extends javax.swing.JFrame {
             public void run() {
                 new MainWindow().setVisible(true);
             }
+            
+             
         });
     }
 
