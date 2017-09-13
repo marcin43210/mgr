@@ -5,18 +5,46 @@
  */
 package view;
 
+import App.MainDb;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import model.CategoryListModel;
+import model.CategoryModel;
+
 /**
  *
  * @author Pan
  */
 public class GenerujTest extends javax.swing.JPanel {
-
+    MainDb db = new MainDb();
+     private ArrayList<CategoryModel> kategorieMap = new ArrayList<CategoryModel>();
     /**
      * Creates new form GenerujTest
      */
     public GenerujTest() {
         initComponents();
+        setKategorieList();       
+        model.setModelData(kategorieMap);
+        kategorieList.setModel(model);
     }
+    
+    
+  private CategoryListModel model = new CategoryListModel();
+     public void setKategorieList()
+     {
+         try{
+            ResultSet result = db.query("SELECT * FROM category order by id;");
+            while(result.next())
+             {
+                 CategoryModel kategoria = new CategoryModel();
+                 kategoria.setId(result.getLong("id"));
+                 kategoria.setName(result.getString("name"));
+                 kategorieMap.add(kategoria);
+             }
+         }catch(SQLException e){e.printStackTrace();}
+     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,62 +54,101 @@ public class GenerujTest extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        studentsTf = new javax.swing.JTextField();
-        studentsLabel = new javax.swing.JLabel();
         setQuetions = new javax.swing.JButton();
         generateTest = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        kategorieList = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
 
-        studentsLabel.setText("Imiona i nazwiska uczniów (oddzielone średnikami)");
+        setAlignmentX(0.0F);
+        setAlignmentY(0.0F);
+        setMinimumSize(new java.awt.Dimension(500, 100));
+        setPreferredSize(new java.awt.Dimension(500, 397));
 
         setQuetions.setText("Wybierz pytania");
 
         generateTest.setText("Generuj testy");
+
+        kategorieList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                kategorieListMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(kategorieList);
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(studentsTf)
-                .addGap(18, 18, 18)
-                .addComponent(setQuetions, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(studentsLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(209, 209, 209)
-                        .addComponent(generateTest, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addGap(89, 89, 89)
+                .addComponent(generateTest)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
+                .addComponent(setQuetions)
+                .addGap(143, 143, 143))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(studentsLabel)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(setQuetions, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(203, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(studentsTf)
-                        .addGap(31, 31, 31)
-                        .addComponent(generateTest, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(generateTest)
+                    .addComponent(setQuetions))
+                .addGap(396, 396, 396))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void kategorieListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kategorieListMouseClicked
+        // TODO add your handling code here:
+//        if(isLeftMouseButton(evt))
+//        editKategoriaTf.setText(kategorieMap.get(kategorieList.getSelectedIndex()).getName());
+//        else
+//        kategorieList.clearSelection();
+    }//GEN-LAST:event_kategorieListMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton generateTest;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> kategorieList;
     private javax.swing.JButton setQuetions;
-    private javax.swing.JLabel studentsLabel;
-    private javax.swing.JTextField studentsTf;
     // End of variables declaration//GEN-END:variables
 }
