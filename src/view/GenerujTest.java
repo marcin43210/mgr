@@ -9,8 +9,12 @@ import App.MainDb;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import static javax.swing.SwingUtilities.isLeftMouseButton;
 import model.CategoryListModel;
 import model.CategoryModel;
+import model.QuestionListModel;
+import model.QuestionModel;
 
 /**
  *
@@ -19,6 +23,7 @@ import model.CategoryModel;
 public class GenerujTest extends javax.swing.JPanel {
     MainDb db = new MainDb();
      private ArrayList<CategoryModel> kategorieMap = new ArrayList<CategoryModel>();
+     private List<QuestionModel> questionsList = new ArrayList<QuestionModel>();
     /**
      * Creates new form GenerujTest
      */
@@ -31,6 +36,7 @@ public class GenerujTest extends javax.swing.JPanel {
     
     
   private CategoryListModel model = new CategoryListModel();
+  private QuestionListModel questionModel = new QuestionListModel();
      public void setKategorieList()
      {
          try{
@@ -44,6 +50,29 @@ public class GenerujTest extends javax.swing.JPanel {
              }
          }catch(SQLException e){e.printStackTrace();}
      }
+     
+     public void setQuestionList(long idCategory)
+     {
+         questionsList.clear();
+          try{
+              String query = "SELECT * from question q "
+                      + "JOIN question2category q2c ON q2c.id_question = q.id "
+                      + "WHERE q2c.id_category = " + idCategory;
+
+            ResultSet result = db.query(query);
+            while(result.next())
+             {
+                 QuestionModel question = new QuestionModel();
+                 question.setId(result.getLong("id"));
+                 question.setContent(result.getString("content"));
+                 question.setOdp1(result.getString("odpowiedz_1"));
+                 question.setOdp2(result.getString("odpowiedz_2"));
+                 question.setOdp3(result.getString("odpowiedz_3"));
+                 question.setOdp4(result.getString("odpowiedz_4"));
+                 questionsList.add(question);
+             }
+         }catch(SQLException e){e.printStackTrace();}
+     }
     
 
     /**
@@ -54,14 +83,13 @@ public class GenerujTest extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         setQuetions = new javax.swing.JButton();
         generateTest = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         kategorieList = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        questionList = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
 
@@ -81,12 +109,7 @@ public class GenerujTest extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(kategorieList);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(questionList);
 
         jList2.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -110,7 +133,7 @@ public class GenerujTest extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(89, 89, 89)
                 .addComponent(generateTest)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
                 .addComponent(setQuetions)
                 .addGap(143, 143, 143))
         );
@@ -134,21 +157,24 @@ public class GenerujTest extends javax.swing.JPanel {
 
     private void kategorieListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kategorieListMouseClicked
         // TODO add your handling code here:
-//        if(isLeftMouseButton(evt))
-//        editKategoriaTf.setText(kategorieMap.get(kategorieList.getSelectedIndex()).getName());
-//        else
-//        kategorieList.clearSelection();
+       if(isLeftMouseButton(evt)){
+        setQuestionList(kategorieMap.get(kategorieList.getSelectedIndex()).getId());       
+        questionModel.setModelData(questionsList);
+        questionList.setModel(questionModel);
+        questionList.updateUI();
+       }
+           
     }//GEN-LAST:event_kategorieListMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton generateTest;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<String> kategorieList;
+    private javax.swing.JList<String> questionList;
     private javax.swing.JButton setQuetions;
     // End of variables declaration//GEN-END:variables
 }
