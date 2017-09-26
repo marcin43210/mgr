@@ -6,6 +6,8 @@
 package view;
 
 import App.MainDb;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class GenerujTest extends javax.swing.JPanel {
     MainDb db = new MainDb();
      private ArrayList<CategoryModel> kategorieMap = new ArrayList<CategoryModel>();
      private List<QuestionModel> questionsList = new ArrayList<QuestionModel>();
+     private List<QuestionModel> wybranepytania = new ArrayList<QuestionModel>();
     /**
      * Creates new form GenerujTest
      */
@@ -99,8 +102,18 @@ public class GenerujTest extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(500, 397));
 
         setQuetions.setText("Wybierz pytania");
+        setQuetions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setQuetionsActionPerformed(evt);
+            }
+        });
 
         generateTest.setText("Generuj testy");
+        generateTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateTestActionPerformed(evt);
+            }
+        });
 
         kategorieList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -111,11 +124,6 @@ public class GenerujTest extends javax.swing.JPanel {
 
         jScrollPane2.setViewportView(questionList);
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane3.setViewportView(jList2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -133,7 +141,7 @@ public class GenerujTest extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(89, 89, 89)
                 .addComponent(generateTest)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
                 .addComponent(setQuetions)
                 .addGap(143, 143, 143))
         );
@@ -166,6 +174,71 @@ public class GenerujTest extends javax.swing.JPanel {
            
     }//GEN-LAST:event_kategorieListMouseClicked
 
+    private void setQuetionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setQuetionsActionPerformed
+        // TODO add your handling code here:
+        QuestionListModel wybranePytaniaModel = new QuestionListModel();
+        int tab[] = questionList.getSelectedIndices();
+        for(int i = 0; i<tab.length; i++)
+        {
+            wybranepytania.add(questionsList.get(tab[i]));
+        }
+        wybranePytaniaModel.setModelData(wybranepytania);
+        jList2.setModel(wybranePytaniaModel);
+        jList2.updateUI();
+       
+        
+    }//GEN-LAST:event_setQuetionsActionPerformed
+
+    private void generateTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateTestActionPerformed
+        // TODO add your handling code here:
+        generuj();
+    }//GEN-LAST:event_generateTestActionPerformed
+
+    private void generuj()
+    {
+        String html = "<html>\n" +
+            "<head>\n" +
+            "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
+            "<title>Test wiedzy</title>\n" +
+            "</head>\n" +
+            "<body>\n" +
+            "<center>\n" +
+            "\n" +
+            "<table><tr><td width=\"800\">\n" +
+            "<form action=\"karta.php\" mthod=\"post\">\n" +
+            "<fieldset><legend>Zaznacz tylko jedną odpowiedź do każdego pytania - jest to test jednokrotnego wyboru.</legend>\n" +
+            "<p><b>Identyfikator/nr indeksu </b><input type=\"text\" name=\"date\" size=\"20\" maxlength=\"40\"/></p>";
+         for(int i = 0; i < wybranepytania.size(); i ++)
+         {
+            html += "<p><b>" + wybranepytania.get(i).getContent() + "</b></p>";
+            html += "<input type=\"checkbox\" name=\"nazwa\" value=\"wartość\" />" + wybranepytania.get(i).getOdp1() + "<br>";
+            html += "<input type=\"checkbox\" name=\"nazwa\" value=\"wartość\" />" + wybranepytania.get(i).getOdp2() + "<br>";
+            html += "<input type=\"checkbox\" name=\"nazwa\" value=\"wartość\" />" + wybranepytania.get(i).getOdp3() + "<br>";
+            html += "<input type=\"checkbox\" name=\"nazwa\" value=\"wartość\" />" + wybranepytania.get(i).getOdp4() + "<br>";
+            
+         }
+         html+= "<div align=\"center\"><input type=\"submit\" name=\"submit\" value=\"Wyślij odpowiedzi\"/></div>\n" +
+            "</form>\n" +
+            "\n" +
+            "</td></tr></table>\n" +
+            "</center>\n" +
+            "</body>\n" +
+            "</html>";
+         
+        FileWriter fWriter = null;
+        BufferedWriter writer = null;
+            try {
+            fWriter = new FileWriter("test.html");
+            writer = new BufferedWriter(fWriter);
+            
+            writer.write(html);
+            
+            writer.newLine(); //this is not actually needed for html files - can make your code more readable though 
+            writer.close(); //make sure you close the writer object 
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton generateTest;

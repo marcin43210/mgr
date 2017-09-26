@@ -39,7 +39,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
               <Component id="generateTest" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="249" max="32767" attributes="0"/>
+              <EmptySpace pref="248" max="32767" attributes="0"/>
               <Component id="setQuetions" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
           </Group>
@@ -72,11 +72,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Wybierz pytania"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="setQuetionsActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="generateTest">
       <Properties>
         <Property name="text" type="java.lang.String" value="Generuj testy"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generateTestActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -124,13 +130,7 @@
         <Component class="javax.swing.JList" name="jList2">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
