@@ -7,10 +7,9 @@
 <center>
 
 <table><tr><td width="800">
-<form action="karta.php" mthod="post">
 <fieldset><legend>Zaznacz tylko jedną odpowiedź do każdego pytania - jest to test jednokrotnego wyboru.</legend>
-<p><b>Identyfikator/nr indeksu </b><input type="text" name="date" size="20" maxlength="40"/></p><p><b>123</b></p><input type="checkbox" name="nazwa" value="wartość" />111<br><input type="checkbox" name="nazwa" value="wartość" />222<br><input type="checkbox" name="nazwa" value="wartość" />333<br><input type="checkbox" name="nazwa" value="wartość" />444<br><p><b>gsd</b></p><input type="checkbox" name="nazwa" value="wartość" />dfg<br><input type="checkbox" name="nazwa" value="wartość" />dsgf<br><input type="checkbox" name="nazwa" value="wartość" />sdfg<br><input type="checkbox" name="nazwa" value="wartość" />sdfg<br><div align="center"><input type="submit" name="submit" value="Wyślij odpowiedzi"/></div>
-</form>
+<form action="karta_2.php" method="post">
+<p><b>Pytanie nr 1</b></p><input type="hidden" name="id_pytania" value="7" /><input type="checkbox" name="odp[]" value="123"/>123<br><input type="checkbox" name="odp[]" value="321"/>321<br><input type="checkbox" name="odp[]" value="222"/>222<br><input type="checkbox" name="odp[]" value="333"/>333<br><input type="submit" name="submit" value="Sprawdź odpowiedź"/></form></div>
 
 </td></tr></table>
 </center>

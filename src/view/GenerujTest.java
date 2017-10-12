@@ -6,17 +6,33 @@
 package view;
 
 import App.MainDb;
+import static com.sun.org.apache.xerces.internal.xinclude.XIncludeHandler.BUFFER_SIZE;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import model.CategoryListModel;
 import model.CategoryModel;
 import model.QuestionListModel;
 import model.QuestionModel;
+import org.apache.commons.net.ftp.FTPClient;
+
+
 
 /**
  *
@@ -95,6 +111,7 @@ public class GenerujTest extends javax.swing.JPanel {
         questionList = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
 
         setAlignmentX(0.0F);
         setAlignmentY(0.0F);
@@ -126,24 +143,37 @@ public class GenerujTest extends javax.swing.JPanel {
 
         jScrollPane3.setViewportView(jList2);
 
+        jButton1.setText("Wyczyść pytania");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(generateTest)))
                 .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(generateTest)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
-                .addComponent(setQuetions)
-                .addGap(143, 143, 143))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addComponent(setQuetions)
+                        .addGap(143, 143, 143))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +188,8 @@ public class GenerujTest extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(generateTest)
-                    .addComponent(setQuetions))
+                    .addComponent(setQuetions)
+                    .addComponent(jButton1))
                 .addGap(396, 396, 396))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -173,10 +204,10 @@ public class GenerujTest extends javax.swing.JPanel {
        }
            
     }//GEN-LAST:event_kategorieListMouseClicked
-
+QuestionListModel wybranePytaniaModel = new QuestionListModel();
     private void setQuetionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setQuetionsActionPerformed
         // TODO add your handling code here:
-        QuestionListModel wybranePytaniaModel = new QuestionListModel();
+        
         int tab[] = questionList.getSelectedIndices();
         for(int i = 0; i<tab.length; i++)
         {
@@ -192,7 +223,17 @@ public class GenerujTest extends javax.swing.JPanel {
     private void generateTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateTestActionPerformed
         // TODO add your handling code here:
         generuj();
+
     }//GEN-LAST:event_generateTestActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        wybranepytania.clear();
+                wybranePytaniaModel.setModelData(wybranepytania);
+        jList2.setModel(wybranePytaniaModel);
+        jList2.updateUI();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void generuj()
     {
@@ -205,20 +246,42 @@ public class GenerujTest extends javax.swing.JPanel {
             "<center>\n" +
             "\n" +
             "<table><tr><td width=\"800\">\n" +
-            "<form action=\"karta.php\" mthod=\"post\">\n" +
-            "<fieldset><legend>Zaznacz tylko jedną odpowiedź do każdego pytania - jest to test jednokrotnego wyboru.</legend>\n" +
-            "<p><b>Identyfikator/nr indeksu </b><input type=\"text\" name=\"date\" size=\"20\" maxlength=\"40\"/></p>";
+            
+            "<fieldset><legend>Zaznacz tylko jedną odpowiedź do każdego pytania - jest to test jednokrotnego wyboru.</legend>\n"; 
+            
          for(int i = 0; i < wybranepytania.size(); i ++)
          {
-            html += "<p><b>" + wybranepytania.get(i).getContent() + "</b></p>";
-            html += "<input type=\"checkbox\" name=\"nazwa\" value=\"wartość\" />" + wybranepytania.get(i).getOdp1() + "<br>";
-            html += "<input type=\"checkbox\" name=\"nazwa\" value=\"wartość\" />" + wybranepytania.get(i).getOdp2() + "<br>";
-            html += "<input type=\"checkbox\" name=\"nazwa\" value=\"wartość\" />" + wybranepytania.get(i).getOdp3() + "<br>";
-            html += "<input type=\"checkbox\" name=\"nazwa\" value=\"wartość\" />" + wybranepytania.get(i).getOdp4() + "<br>";
-            
+             
+            html+= "<form target=\"_blank\" action=\"karta_2.php\" method=\"post\">\n";
+            html += "<p><b>" + wybranepytania.get(i).getContent() + "</b></p><input type=\"hidden\" name=\"id_pytania\" value=\""+ wybranepytania.get(i).getId() + "\" />";
+            List <String> odpowiedzi = new ArrayList<String>();
+            odpowiedzi.add(wybranepytania.get(i).getOdp1());
+            odpowiedzi.add(wybranepytania.get(i).getOdp2());
+            odpowiedzi.add(wybranepytania.get(i).getOdp3());
+            odpowiedzi.add(wybranepytania.get(i).getOdp4());
+            Random generator = new Random();
+            List list = Arrays.asList(odpowiedzi);
+            //for(int y = 0; i<odpowiedzi.size(); y++)
+            System.out.println("przed shufle ");
+                 for(Object str: (list)){
+            System.out.println(str.toString());
+        }
+            Collections.shuffle(list);
+            System.out.println("po shufle ");
+            for(Object str: list){
+            System.out.println(str.toString());
+        }
+                
+            for(int x=0; x<odpowiedzi.size(); x++){
+            html += "<input type=\"checkbox\" name=\"odp[]\" value=\"" + list.get(x).toString() +"\"/>" + wybranepytania.get(i).getOdp1() + "<br>";
+            //html += "<input type=\"checkbox\" name=\"odp[]\" value=\"" + wybranepytania.get(i).getOdp2() +"\"/>" + wybranepytania.get(i).getOdp2() + "<br>";
+            //html += "<input type=\"checkbox\" name=\"odp[]\" value=\"" + wybranepytania.get(i).getOdp3() +"\"/>" + wybranepytania.get(i).getOdp3() + "<br>";
+            //html += "<input type=\"checkbox\" name=\"odp[]\" value=\"" + wybranepytania.get(i).getOdp4() +"\"/>" + wybranepytania.get(i).getOdp4() + "<br>";
+            html += "<input type=\"submit\" name=\"submit\" value=\"Sprawdź odpowiedź\"/></form>";
+            }
          }
-         html+= "<div align=\"center\"><input type=\"submit\" name=\"submit\" value=\"Wyślij odpowiedzi\"/></div>\n" +
-            "</form>\n" +
+         html+= "</div>\n" +
+            
             "\n" +
             "</td></tr></table>\n" +
             "</center>\n" +
@@ -228,7 +291,7 @@ public class GenerujTest extends javax.swing.JPanel {
         FileWriter fWriter = null;
         BufferedWriter writer = null;
             try {
-            fWriter = new FileWriter("test.html");
+            fWriter = new FileWriter("index.html");
             writer = new BufferedWriter(fWriter);
             
             writer.write(html);
@@ -238,10 +301,53 @@ public class GenerujTest extends javax.swing.JPanel {
         } catch (Exception e) {
           e.printStackTrace();
         }
+           // sendfile();
+           
+            
+            
+    }
+    
+    
+    private void sendfile()
+    {
+          
+       FTPClient client = new FTPClient();
+        FileInputStream fis = null;
+
+        try {
+            client.connect("ftp.serwer1749827.home.pl");
+            client.login("serwer", "serwer123456");
+
+            //
+            // Create an InputStream of the file to be uploaded
+            //
+            client.removeDirectory("index.html");
+            String filename = "index.html";
+            fis = new FileInputStream(filename);
+
+            //
+            // Store file to server
+            //
+            client.storeFile(filename, fis);
+            client.logout();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                client.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton generateTest;
+    private javax.swing.JButton jButton1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

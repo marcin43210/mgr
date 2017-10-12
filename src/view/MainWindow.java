@@ -293,6 +293,8 @@ public class MainWindow extends javax.swing.JFrame {
         editKategoriaTf.setText(kategorieMap.get(kategorieList.getSelectedIndex()).getName());
         else
         kategorieList.clearSelection();
+        
+        
 
     }//GEN-LAST:event_kategorieListMouseClicked
 
